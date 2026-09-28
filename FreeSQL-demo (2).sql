@@ -1,0 +1,10 @@
+SELECT employee_id,first_name,salary,RANK() OVER (ORDER BY salary DESC) AS salary_rank FROM hr.employees;
+SELECT employee_id,first_name,salary,DENSE_RANK() OVER (ORDER BY salary DESC) AS salary_dense_rank FROM hr.employees;
+SELECT employee_id,first_name,salary,ROW_NUMBER() OVER (ORDER BY salary DESC) AS row_number FROM hr.employees;
+SELECT employee_id,first_name,department_id,salary,RANK() OVER ( PARTITION BY department_id ORDER BY salary DESC) AS dept_salary_rank FROM hr.employees;
+SELECT employee_id,first_name,department_id,salary,DENSE_RANK() OVER (PARTITION BY department_id ORDER BY salary DESC) AS dept_dense_rank FROM hr.employees;
+SELECT employee_id,first_name,department_id,salary,ROW_NUMBER() OVER (PARTITION BY department_id ORDER BY salary DESC) AS dept_row_number FROM hr.employees;
+SELECT *FROM ( SELECT employee_id,first_name,salary,ROW_NUMBER() OVER (ORDER BY salary DESC) AS rn FROM hr.employees)WHERE rn <= 5;
+SELECT *FROM (SELECT employee_id,first_name,salary,DENSE_RANK() OVER (ORDER BY salary DESC) AS salary_rank FROM hr.employees)WHERE salary_rank <= 3;
+SELECT employee_id,first_name, last_name,salary FROM hr.employees WHERE ROWNUM <= 10;
+SELECT employee_id,first_name,salary FROM (SELECT employee_id,first_name,salary FROM hr.employees ORDER BY salary DESC)WHERE ROWNUM <= 10;
